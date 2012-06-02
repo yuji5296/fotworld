@@ -2,6 +2,7 @@ package org.fotworld.app001;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,34 +19,48 @@ public class TopActivity extends Activity{
 	/** Called when the activity is first created. */
 	public class BindData {
 		int iconId;
-		String title;
+		int title;
 
-		BindData(int id, String s) {
+		BindData(int id, int s) {
 			this.iconId = id;
 			this.title = s;
 		}
 	}
 
 	private BindData[] mDatas = {
-			new BindData(android.R.drawable.ic_menu_agenda, "Agenda"),
-			new BindData(android.R.drawable.ic_menu_month, "Calendar"),
-			new BindData(android.R.drawable.ic_menu_camera, "Camera"),
-			new BindData(android.R.drawable.ic_menu_add, "Add"),
-			new BindData(android.R.drawable.ic_menu_preferences, "Prefereces"),
-			new BindData(android.R.drawable.ic_menu_share, "Share"),
-			new BindData(android.R.drawable.ic_menu_info_details, "Info"),
-			new BindData(android.R.drawable.ic_menu_help, "Help"), };
+			new BindData(android.R.drawable.ic_menu_agenda, R.string.news),
+			new BindData(android.R.drawable.ic_menu_month, R.string.calendar),
+			new BindData(android.R.drawable.ic_menu_camera, R.string.camera),
+			new BindData(android.R.drawable.ic_menu_search, R.string.search),
+			new BindData(android.R.drawable.ic_menu_preferences, R.string.preference),
+			new BindData(android.R.drawable.ic_menu_share, R.string.share),
+			new BindData(android.R.drawable.ic_menu_info_details, R.string.info),
+			new BindData(android.R.drawable.ic_menu_help, R.string.help)
+	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.top);
 
 		GridView gridview = (GridView) findViewById(R.id.gridview);
 		gridview.setAdapter(new MyAdapter(this, R.layout.item, mDatas));
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(TopActivity.this, "" + position+":"+id, Toast.LENGTH_SHORT).show();
+                Intent intent;
+                switch (position){
+                case 0:
+                	intent = new Intent(getApplication(), RssReaderActivity.class);
+            		startActivity(intent);
+            		break;
+                case 6:
+                	intent = new Intent(getApplication(), AboutActivity.class);
+            		startActivity(intent);
+            		break;
+            	default:
+                    Toast.makeText(TopActivity.this, "Sorry", Toast.LENGTH_SHORT).show();
+            		
+            	}
             }
         });	
     }
@@ -82,7 +97,7 @@ public class TopActivity extends Activity{
 				holder = (ViewHolder) convertView.getTag();
 			}
 			BindData data = getItem(position);
-			holder.textView.setText(data.title);
+			holder.textView.setText(getString(data.title));
 			holder.imageView.setImageResource(data.iconId);
 			return convertView;
 		}

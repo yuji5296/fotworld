@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="help">ヘルプ</string>
+    <string name="info">アプリ情報</string>
+    <string name="preference">設定</string>
+    <string name="loading">ロード中</string>
+    <string name="share">共有</string>
+    <string name="search">検索</string>
+    <string name="slogan">リユースＰＣを世界の子どもたちに</string>
+    <string name="news">最新情報</string>
+    <string name="calendar">活動予定</string>
+    <string name="camera">カメラ</string>
+    
+</resources>

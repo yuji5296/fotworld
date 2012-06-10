@@ -10,7 +10,7 @@ import android.util.Log;
  *
  */
 public class Logout {
-	final static String tag = "KivaJapanReader";
+	final static String tag = "FOTWORLD";
 	/**
 	 * 
 	 */

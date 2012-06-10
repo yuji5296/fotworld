@@ -8,8 +8,10 @@
     <string name="share">共有</string>
     <string name="search">検索</string>
     <string name="slogan">リユースＰＣを世界の子どもたちに</string>
-    <string name="news">最新情報</string>
+    <string name="news">最近の更新履歴</string>
     <string name="calendar">活動予定</string>
     <string name="camera">カメラ</string>
+    <string name="gallery">活動写真</string>
+    <string name="map">寄贈先</string>
     
 </resources>

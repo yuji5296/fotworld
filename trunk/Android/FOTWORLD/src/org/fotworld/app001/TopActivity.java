@@ -1,7 +1,11 @@
 package org.fotworld.app001;
 
 import java.io.File;
+
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,19 +40,26 @@ public class TopActivity extends Activity {
 	private BindData[] mDatas = {
 			new BindData(android.R.drawable.ic_menu_recent_history, R.string.news),
 			new BindData(android.R.drawable.ic_menu_month, R.string.calendar),
-			new BindData(android.R.drawable.ic_menu_camera, R.string.camera),
-			new BindData(android.R.drawable.ic_menu_search, R.string.search),
-			new BindData(android.R.drawable.ic_menu_preferences, R.string.preference),
-			new BindData(android.R.drawable.ic_menu_share, R.string.share),
-			new BindData(android.R.drawable.ic_menu_info_details, R.string.info),
-			new BindData(android.R.drawable.ic_menu_help, R.string.help),
 			new BindData(android.R.drawable.ic_menu_gallery, R.string.gallery),
 			new BindData(android.R.drawable.ic_menu_mapmode, R.string.map),
-};
+			new BindData(android.R.drawable.ic_menu_camera, R.string.camera),
+			new BindData(android.R.drawable.ic_menu_share, R.string.share),
+//			new BindData(android.R.drawable.ic_menu_search, R.string.search),
+//			new BindData(android.R.drawable.ic_menu_preferences, R.string.preference),
+			new BindData(android.R.drawable.ic_menu_info_details, R.string.info),
+			new BindData(android.R.drawable.ic_menu_help, R.string.help),
+			new BindData(R.drawable.facebook, R.string.facebook),
+	};
+	
+	GoogleAnalyticsTracker tracker;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		tracker = GoogleAnalyticsTracker.getInstance();  
+        tracker.startNewSession("UA-28921874-4", 60, this); 
+        tracker.trackPageView("/TopActivity");
+
+        super.onCreate(savedInstanceState);
 		setContentView(R.layout.top);
 
 		GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -56,22 +67,42 @@ public class TopActivity extends Activity {
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent;
+                Uri uri;
 				switch (position){
                 case 0: //最新情報
+                    tracker.trackPageView("/TopActivity/rss");
                 	//RSSリーダを開く
                 	intent = new Intent(getApplication(), RssReaderActivity.class);
             		startActivity(intent);
             		break;
                 case 1: //活動予定
+                    tracker.trackPageView("/TopActivity/calendar");
                 	//活動予定のページを開く
-    				Uri uri = Uri.parse("http://www.fotworld.org/about/calendar");
+//    				Uri uri = Uri.parse("http://www.fotworld.org/about/calendar");
+                	//adminのカレンダーをブラウザで開く
+    				uri = Uri.parse("https://www.google.com/calendar/embed?src=6427dlhbj4jq0kh91smvr8rnjc@group.calendar.google.com");
     				intent = new Intent(Intent.ACTION_VIEW,uri);
     				//Android標準のカレンダーアプリを起動
 //    				intent = new Intent(Intent.ACTION_VIEW);
 //    				intent.setClassName("com.android.calendar", "com.android.calendar.LaunchActivity");
     				startActivity(intent);
     				break;
-                case 2: //カメラ起動
+                case 2: //活動写真
+                    tracker.trackPageView("/TopActivity/picasa");
+                	//Piacasaのアルバムを開く
+                	uri = Uri.parse("https://picasaweb.google.com/116766722328185923795/TASUKi_record");
+                	intent = new Intent(Intent.ACTION_VIEW, uri);  
+                	startActivity(intent);     	
+                	break;
+                case 3: //地図
+                    tracker.trackPageView("/TopActivity/map");
+                	//寄贈先の地図を開く
+                	uri = Uri.parse("https://maps.google.com/maps/ms?msid=204531763720450638157.0004c284ead4abf0ced26&msa=0");
+                	intent = new Intent(Intent.ACTION_VIEW, uri);  
+                	startActivity(intent);     	
+                	break;
+                case 4: //カメラ起動
+                    tracker.trackPageView("/TopActivity/camera");
                 	intent = new Intent();
                 	intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                 	intent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -81,6 +112,7 @@ public class TopActivity extends Activity {
                 	startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
             		break;
                 case 5: //共有
+                    tracker.trackPageView("/TopActivity/share");
         			intent = new Intent(Intent.ACTION_SEND);
         			intent.setType("text/plain");
         			intent.putExtra(Intent.EXTRA_TEXT, "http://www.fotworld.org/");
@@ -88,19 +120,36 @@ public class TopActivity extends Activity {
         			startActivity(intent);        			
             		break;                	
                 case 6: //アプリ情報
+                    tracker.trackPageView("/TopActivity/info");
                 	//バージョン情報などを表示
                 	intent = new Intent(getApplication(), AboutActivity.class);
             		startActivity(intent);
             		break;
                 case 7: //ヘルプ
+                    tracker.trackPageView("/TopActivity/help");
                 	//FOTWORLDとは何かを説明
                 	//このアプリの操作方法を説明
                 	intent = new Intent(getApplication(), HelpActivity.class);
             		startActivity(intent);
                 	break;
-                case 3: //検索
-                case 4: //設定
+                case 8: //Facebook
+                    tracker.trackPageView("/TopActivity/facebook");
+                    //Facebookページを開く
+                    try {
+                        uri = Uri.parse("fb://page/167295640049952");
+                    	intent = new Intent(Intent.ACTION_VIEW, uri);  
+                    	startActivity(intent);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        uri = Uri.parse("http://www.facebook.com/fotworld/");
+                    	intent = new Intent(Intent.ACTION_VIEW, uri);  
+                    	startActivity(intent);
+                    }
+                	break;
+//                case 6: //検索
+//                case 7: //設定
             	default:
+                    tracker.trackPageView("/TopActivity/others");
                     Toast.makeText(TopActivity.this, "Sorry, this feature will be coming soon.", Toast.LENGTH_SHORT).show();
             		
             	}

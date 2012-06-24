@@ -10,8 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +40,7 @@ public class TopActivity extends Activity {
 			new BindData(android.R.drawable.ic_menu_month, R.string.calendar),
 			new BindData(android.R.drawable.ic_menu_gallery, R.string.gallery),
 			new BindData(android.R.drawable.ic_menu_mapmode, R.string.map),
-			new BindData(android.R.drawable.ic_menu_camera, R.string.camera),
+			new BindData(android.R.drawable.ic_menu_upload, R.string.upload),
 			new BindData(android.R.drawable.ic_menu_share, R.string.share),
 //			new BindData(android.R.drawable.ic_menu_search, R.string.search),
 //			new BindData(android.R.drawable.ic_menu_preferences, R.string.preference),
@@ -69,13 +67,13 @@ public class TopActivity extends Activity {
                 Intent intent;
                 Uri uri;
 				switch (position){
-                case 0: //最新情報
+                case 0: //News
                     tracker.trackPageView("/TopActivity/rss");
                 	//RSSリーダを開く
                 	intent = new Intent(getApplication(), RssReaderActivity.class);
             		startActivity(intent);
             		break;
-                case 1: //活動予定
+                case 1: //Calender
                     tracker.trackPageView("/TopActivity/calendar");
                 	//活動予定のページを開く
 //    				Uri uri = Uri.parse("http://www.fotworld.org/about/calendar");
@@ -87,31 +85,29 @@ public class TopActivity extends Activity {
 //    				intent.setClassName("com.android.calendar", "com.android.calendar.LaunchActivity");
     				startActivity(intent);
     				break;
-                case 2: //活動写真
+                case 2: //Photo
                     tracker.trackPageView("/TopActivity/picasa");
                 	//Piacasaのアルバムを開く
                 	uri = Uri.parse("https://picasaweb.google.com/116766722328185923795/TASUKi_record");
                 	intent = new Intent(Intent.ACTION_VIEW, uri);  
                 	startActivity(intent);     	
                 	break;
-                case 3: //地図
+                case 3: //Maps
                     tracker.trackPageView("/TopActivity/map");
                 	//寄贈先の地図を開く
                 	uri = Uri.parse("https://maps.google.com/maps/ms?msid=204531763720450638157.0004c284ead4abf0ced26&msa=0");
-                	intent = new Intent(Intent.ACTION_VIEW, uri);  
+                	intent = new Intent();
+                	intent.setAction(Intent.ACTION_VIEW);
+                	intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");
+                	intent.setData(uri);
                 	startActivity(intent);     	
                 	break;
-                case 4: //カメラ起動
-                    tracker.trackPageView("/TopActivity/camera");
-                	intent = new Intent();
-                	intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                	intent.addCategory(Intent.CATEGORY_DEFAULT);
-                	//カメラで撮影した画像のファイル名を取得するための処理
-                	mTmpFile = new File(Environment.getExternalStorageDirectory(), "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-                	intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTmpFile));                	// インテントのインスタンス生成
-                	startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                case 4: //Upload
+                    tracker.trackPageView("/TopActivity/upload");
+                	intent = new Intent(getApplication(), PhotoUploadActivity.class);
+            		startActivity(intent);
             		break;
-                case 5: //共有
+                case 5: //Share
                     tracker.trackPageView("/TopActivity/share");
         			intent = new Intent(Intent.ACTION_SEND);
         			intent.setType("text/plain");
@@ -119,13 +115,13 @@ public class TopActivity extends Activity {
         			intent.putExtra(Intent.EXTRA_SUBJECT, "FOTWORLD+α");
         			startActivity(intent);        			
             		break;                	
-                case 6: //アプリ情報
+                case 6: //Info
                     tracker.trackPageView("/TopActivity/info");
                 	//バージョン情報などを表示
                 	intent = new Intent(getApplication(), AboutActivity.class);
             		startActivity(intent);
             		break;
-                case 7: //ヘルプ
+                case 7: //Help
                     tracker.trackPageView("/TopActivity/help");
                 	//FOTWORLDとは何かを説明
                 	//このアプリの操作方法を説明
@@ -138,6 +134,7 @@ public class TopActivity extends Activity {
                     try {
                         uri = Uri.parse("fb://page/167295640049952");
                     	intent = new Intent(Intent.ACTION_VIEW, uri);  
+    					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     	startActivity(intent);
                     }
                     catch (ActivityNotFoundException e) {

@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 public class RssReaderActivity extends ListActivity {
 	public static final String RSS_FEED_URL = "https://sites.google.com/a/fotworld.org/fotworld/activity.xml";
+	public static final String RSS_FEED_URL2 = "https://sites.google.com/site/kivajapanrssreader/news/posts.xml";
+	public static final String RSS_FEED_URL3 = "https://sites.google.com/a/fotworld.org/fotworld/hot-news-1/posts.xml";
 	private ArrayList<Item> mItems;
 	private RssListAdapter mAdapter;
 	

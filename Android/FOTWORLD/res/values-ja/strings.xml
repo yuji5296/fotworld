@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">FOTWORLD</string>
+    <string name="author">Yuji DOI</string>
+    <string name="copyright">&#169;2012, Yuji DOI</string>
+    <string name="mail">yuji5296@gmail.com</string>
+    <string name="url_site">http://www.fotworld.org/</string>
+    
     <string name="help">ヘルプ</string>
     <string name="info">アプリ情報</string>
     <string name="preference">設定</string>
@@ -14,5 +19,6 @@
     <string name="gallery">活動写真</string>
     <string name="map">寄贈先</string>
     <string name="facebook">Facebook</string>
+    <string name="upload">アップロード</string>
     
 </resources>

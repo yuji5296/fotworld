@@ -1,12 +1,9 @@
-/**
- * 
- */
 package org.fotworld.app001;
 
 import android.util.Log;
 
 /**
- * @author yuji
+ * @author Yuji DOI
  *
  */
 public class Logout {

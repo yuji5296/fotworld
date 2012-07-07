@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="FOTWORLD+Twitter-Search" title_url="www.fotworld.org" description="This is the gadget of FOTWORLD+α. Display tweets by @FOTWORLD." author="Yuji DOI" author_email="doi.yuji@fotworld.org" screenshot="http://www.fotworld.org/logo.png" thumbnail="http://www.fotworld.org/logo.png" height="400"/>
+<Content type="html">
+<![CDATA[
+<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '#FOTWORLD',
+  interval: 30000,
+  title: 'FOTWORLD+Twitter-Search',
+  subject: '#FOTWORLD',
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#8ec1da',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: true,
+    loop: true,
+    live: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+]]>
+</Content>
+</Module>

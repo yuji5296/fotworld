@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="FOTWORLD" title_url="www.fotworld.org" description="This is the gadget of FOTWORLD+α. We hope to send reuse PC to children in the world." author="Yuji DOI" author_email="doi.yuji@fotworld.org" screenshot="http://www.fotworld.org/logo.png" thumbnail="http://www.fotworld.org/logo.png"/>
+<Content type="html">
+<![CDATA[
+<script type="text/javascript">
+    // ランダムに画像を表示する
+    img = new Array();
+    img[0] = "http://www.fotworld.org/about/who-we-are/DSC_1265-1.jpg";
+    img[1] = "http://www.fotworld.org/about/faqs/0031-1.jpg";
+    img[2] = "http://www.fotworld.org/project/tasuki/115164724_org-1.jpg";
+    img[3] = "http://www.fotworld.org/project/tasuki/corp/DSC01066.JPG";
+    link = new Array();
+    link[0] = "http://www.fotworld.org/about/who-we-are/";
+    link[1] = "http://www.fotworld.org/about/faqs/";
+    link[2] = "http://www.fotworld.org/project/tasuki/";
+    link[3] = "http://www.fotworld.org/project/tasuki/corp/";
+    document.write("<a id='anc01' href='' target='_blank'>");
+    document.write("<img id='img01' src='' border='0' width='100%'>");
+    document.write("</a>");
+    var i=0;
+
+function Hyoji()
+{
+    i=i+1;
+    if (i>3) i=0;
+    var element=document.getElementById("img01") 
+    element.setAttribute("src",img[i]);
+    var element=document.getElementById("anc01") 
+    element.setAttribute("href",link[i]);
+}
+  Hyoji();
+  //関数Hyoji()を1000ミリ秒間隔で呼び出す
+  setInterval("Hyoji()",10000);
+</SCRIPT>
+]]>
+</Content>
+</Module>

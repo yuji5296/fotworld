@@ -78,15 +78,11 @@
  
      if (!response.error) {
        var markup = '';
- 
        var friends = response.data;
- 
        for (var i=0; i < friends.length && i < 25; i++) {
          var friend = friends[i];
- 
          markup += '<img src="' + friend.picture + '"> ' + friend.name + '<br>';
        }
- 
        document.getElementById('user-friends').innerHTML = markup;
      }
    });
@@ -96,31 +92,31 @@
 <a href="#" onclick="sendRequest();">Send request</a><br>
 <script>
 function sendRequest() {
-  FB.ui({
-    method: 'apprequests',
-    message: 'invites you to learn how to make your mobile web app social',
-  }, 
-  function(response) {
-    console.log('sendRequest response: ', response);
-  });
+	FB.ui({
+		method: 'apprequests',
+		message: 'invites you to learn how to make your mobile web app social',
+	}, 
+	function(response) {
+		console.log('sendRequest response: ', response);
+	});
 }
 </script>
 
 <a href="#" onclick="publishStory();">Publish feed story</a><br>
 <script>
 function publishStory() {
-  FB.ui({
-    method: 'feed',
-    name: 'I\'m building a social mobile web app!',
-    caption: 'This web app is going to be awesome.',
-    description: 'Check out Facebook\'s developer site to start building.',
-    link: 'http://developers.facebook.com/mobile',
-    picture: 'http://www.facebookmobileweb.com/getting-started/img/facebook_icon_large.png'
-  }, 
-  function(response) {
-    console.log('publishStory response: ', response);
-  });
-  return false;
+	FB.ui({
+		method: 'feed',
+		name: 'I\'m building a social mobile web app!',
+		caption: 'This web app is going to be awesome.',
+		description: 'Check out Facebook\'s developer site to start building.',
+		link: 'http://developers.facebook.com/mobile',
+		picture: 'http://www.facebookmobileweb.com/getting-started/img/facebook_icon_large.png'
+	}, 
+	function(response) {
+		console.log('publishStory response: ', response);
+	});
+	return false;
 }
 </script>
 

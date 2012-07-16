@@ -1,0 +1,23 @@
+body {
+    background-color: white;
+    font-size: small;
+}
+div , table, tr, td{
+    background-color: white;
+    font-size: small;
+}
+.header{
+	font-weight: bold;
+    font-size: medium;
+	text-align: center;
+	color: white;
+	background-color: orange;
+}
+.footer{
+	font-style: italic;
+    font-size: small;
+	text-align: center;
+	color: white;
+	background-color: orange;
+	height: 100%;
+}

@@ -1,0 +1,137 @@
+<html>
+<head>
+	<title>Hello FOTWORLD+Facebook</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="fotworld.css"/>
+	<meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+	<meta property="og:title" content="Hello FOTWORLD+Facebook" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Hello FOTWORLD+Facebook" />
+	<meta property="og:description" content="This is Facebook application by FOTWORLD+α." />
+	<meta property="og:image" content="icon64.png"/>
+	<meta property="fb:admins" content="311614902233726" />
+</head>
+<body>
+<div>
+<h1><img src="icon64.png" align="absmiddle"/>
+FOTWORLD+Facebook</h1>
+<img src="cover760x375.jpg" width="720"/>
+</div>
+<div id="fb-root"></div>
+<script>
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/ja_JP/all.js';
+        document.getElementById('fb-root').appendChild(e);
+        }());
+</script>
+
+<script>
+    window.fbAsyncInit = function() {
+    FB.init({ appId: '311614902233726', 
+      status: true, 
+      cookie: true,
+      xfbml: true,
+      oauth: true});
+ 
+      FB.Event.subscribe('auth.statusChange', handleStatusChange);  
+    };
+</script>
+<div id="login">
+  <p><button onClick="loginUser();">Login</button></p>
+</div>
+<div id="logout">
+  <p><button  onClick="FB.logout();">Logout</button></p>
+</div>
+ 
+<script>
+  function loginUser() {    
+    FB.login(function(response) { }, {scope:'email'});     
+    }
+</script>
+
+<style>
+  body.connected #login { display: none; }
+  body.connected #logout { display: block; }
+  body.not_connected #login { display: block; }
+      body.not_connected #logout { display: none; }
+</style>
+
+<script>
+ function handleStatusChange(response) {
+     document.body.className = response.authResponse ? 'connected' : 'not_connected';
+     if (response.authResponse) {
+       console.log(response);
+ 
+       updateUserInfo(response);
+     }
+   }
+</script>
+
+<div id="user-info"></div>
+ <script>
+   function updateUserInfo(response) {
+     FB.api('/me', function(response) {
+       document.getElementById('user-info').innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
+     });
+   }
+ </script>
+
+<a href="#" onclick="getUserFriends();">Get friends</a><br>
+ <div id="user-friends"></div>
+ <script>
+ function getUserFriends() {
+   FB.api('/me/friends&fields=name,picture', function(response) {
+     console.log('Got friends: ', response);
+ 
+     if (!response.error) {
+       var markup = '';
+       var friends = response.data;
+       for (var i=0; i < friends.length && i < 25; i++) {
+         var friend = friends[i];
+         markup += '<img src="' + friend.picture + '"> ' + friend.name + '<br>';
+       }
+       document.getElementById('user-friends').innerHTML = markup;
+     }
+   });
+ }
+ </script>
+
+<a href="#" onclick="sendRequest();">Send request</a><br>
+<script>
+function sendRequest() {
+	FB.ui({
+		method: 'apprequests',
+		message: 'invites you to learn how to make your mobile web app social',
+	}, 
+	function(response) {
+		console.log('sendRequest response: ', response);
+	});
+}
+</script>
+
+<a href="#" onclick="publishStory();">Publish feed story</a><br>
+<script>
+function publishStory() {
+	FB.ui({
+		method: 'feed',
+		name: 'I\'m building a social mobile web app!',
+		caption: 'This web app is going to be awesome.',
+		description: 'Check out Facebook\'s page.',
+		link: 'http://www.facebook.com/fotworld/',
+		picture: 'icon64.png'
+	}, 
+	function(response) {
+		console.log('publishStory response: ', response);
+	});
+	return false;
+}
+</script>
+
+<fb:like></fb:like>
+
+<hr>
+<i>&copy; 2012 <a href="http://www.fotworld.org/">FOTWORLD+α</a>. All rights reserved.</i>
+
+</body>
+</html>

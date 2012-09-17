@@ -132,9 +132,10 @@ public class TopActivity extends Activity {
                     tracker.trackPageView("/TopActivity/facebook");
                     //Facebookページを開く
                     try {
-                        uri = Uri.parse("fb://page/167295640049952");
-                    	intent = new Intent(Intent.ACTION_VIEW, uri);  
-    					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        uri = Uri.parse("fb://page/167295640049952");
+//                    	intent = new Intent(Intent.ACTION_VIEW, uri);  
+//    					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    	intent = new Intent(getApplication(), FacebookActivity.class);
                     	startActivity(intent);
                     }
                     catch (ActivityNotFoundException e) {
